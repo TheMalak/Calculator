@@ -1,21 +1,14 @@
 package com.example.calculator;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+import org.mariuszgromada.math.mxparser.Expression;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,9 +16,6 @@ public class MainActivity extends AppCompatActivity {
     TextView resultViewText;
     String operations = "";
     static final String SINTAXTERROR = "Error de Sintaxis";
-
-    //atributtes
-    //a = sin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,131 +57,60 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void complexSolver(String valueToSolve) {
 
-        char[] operationsToChar = operations.toCharArray(); //separamos cada uno de los valores actuales
+    public void equalsOnClick(View view){
+
+        Expression expression = new Expression(addPercent());
+        //Log.i("currentOperation", );
+        double result = expression.calculate();
+        if(String.valueOf(result) == "NaN")
+            resultViewText.setText(SINTAXTERROR);
+        else
+            resultViewText.setText(String.valueOf(result));
+
+    }
+
+    private String addPercent()
+    {
+
+        char[] arr = operations.toCharArray();
         List<String> tempArrPercent = new ArrayList<String>();
 
-        for (int i = 0; i < operationsToChar.length; i++){
-            if(!isNumeric(operationsToChar[i])) { //cuando encuentre un elemento que no es un numero
+        for (int i = 0; i < arr.length; i++){
 
-            }
-        }
+            if(arr[i] == '%'){
 
-//        double[] values = getTwoValuesInMiddleSign(operationsToChar, '^');
-//        Log.i("pow", powSolver(values[0], values[1]));
+                int data = arr[i];
+                tempArrPercent.add("*(");
 
-    }
+                for (int j = i+1; j < arr.length; j++) {
 
-    private double[] getTwoValuesInMiddleSign(char[] operationsToChar, char symbol){
+                    try {
+                        int newNumberPercenten = Integer.parseInt(String.valueOf(arr[j]));
+                        tempArrPercent.add(String.valueOf(newNumberPercenten));
 
-        List<String> firstNumber = new ArrayList<String>();
-        List<String> secondNumber = new ArrayList<String>();
-
-        for (int i = 0; i < operationsToChar.length; i++){
-            if(!isNumeric(operationsToChar[i])) { //cuando encuentre un elemento que no es un numero
-                //Log.i("number", String.valueOf(operationsToChar[i])); //comprobar que simbolo es
-                char currentSymbol = operationsToChar[i];
-
-                if (currentSymbol == symbol) {
-
-                    //reversa
-                    for (int j = i - 1; j >= 0; j--) {
-                        if(isNumeric(operationsToChar[j])){
-                            firstNumber.add(0, String.valueOf(operationsToChar[j]));
-                        } else {
-                            break;
-                        }
-                    }
-
-                    //adelante
-                    for (int k = i + 1; k < operationsToChar.length; k++) {
-                        if(isNumeric(operationsToChar[k])){
-                            secondNumber.add(String.valueOf(operationsToChar[k]));
-                        } else {
-                            break;
-                        }
+                    } catch (Exception d) {
+                        data = j;
+                        break;
                     }
 
                 }
+
+                tempArrPercent.add("/100)");
+
+                i = data - 1;
+
+            }
+            else {
+                tempArrPercent.add(String.valueOf(arr[i]));
             }
         }
 
-        //toString
-        double firstNumberDouble = Double.parseDouble(TextUtils.join("", firstNumber));
-        double secondNumberDouble = Double.parseDouble(TextUtils.join("", secondNumber));
-
-        double[] returnArray = {firstNumberDouble, secondNumberDouble};
-
-        return returnArray;
-    }
-
-    private String powSolver(double a, double b){
-        return String.valueOf("(" + Math.pow(a,b) + ")");
-    }
-
-    private String sinSolver(double a){
-        return String.valueOf("*(" + Math.sin(a) + ")");
-    }
-
-    private boolean isNumeric(char c)
-    {
-        if((c <= '9' && c >= '0') || c == '.')
-            return true;
-
-        return false;
-    }
-
-    private boolean basicOperators(char c) {
-        if(c == '+' || c == '-' || c == '*' || c == '/')
-            return true;
-
-        return false;
-    }
-
-    private void generateResult(){
-        Double result = null;
-        ScriptEngine engine = new ScriptEngineManager().getEngineByName("rhino");
-
-        String currentVal = operationsViewText.getText().toString();
-
-        if(currentVal.isEmpty()) {
-
-            return; //no hacer nada si no hay un resultado
-
-        } else {
-            try {
-                result = (double)engine.eval("5*(5)");
-            }
-            catch (ScriptException e)
-            { resultViewText.setText(SINTAXTERROR); }
-            if(result != null) {
-
-                String setResult = String.valueOf(result.doubleValue());
-                if(setResult == "Infinity") {
-                    setResult = SINTAXTERROR;
-                } else {
-                    DecimalFormat df = new DecimalFormat("#.00");
-                    setResult = String.valueOf(Double.valueOf(df.format(result)));
-                }
-                resultViewText.setText(setResult);
-            }
-        }
-
-    }
-
-    //genera el resultado a traves de la libreria rhino
-    public void equalsOnClick(View view)
-    {
-        //complexSolver(operationsViewText.getText().toString());
-        generateResult();
-
-        //Log.i("eval", String.valueOf(eval("ln5+5(sin7)")));
+        return TextUtils.join("", tempArrPercent);
 
     }
 
 
-    //remueve toda la informacion que contenga la vista
     public void clearOnClick(View view){
         operationsViewText.setText("");
         operations = "";
@@ -275,89 +194,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sinOnClick(View view) {
-        setOperations("a");
+        setOperations("sin(");
     }
 
-    public static double eval(final String str) {
-        return new Object() {
-            int pos = -1, ch;
-
-            void nextChar() {
-                ch = (++pos < str.length()) ? str.charAt(pos) : -1;
-            }
-
-            boolean eat(int charToEat) {
-                while (ch == ' ') nextChar();
-                if (ch == charToEat) {
-                    nextChar();
-                    return true;
-                }
-                return false;
-            }
-
-            double parse() {
-                nextChar();
-                double x = parseExpression();
-                if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char)ch);
-                return x;
-            }
-
-            // Grammar:
-            // expression = term | expression `+` term | expression `-` term
-            // term = factor | term `*` factor | term `/` factor
-            // factor = `+` factor | `-` factor | `(` expression `)`
-            //        | number | functionName factor | factor `^` factor
-
-            double parseExpression() {
-                double x = parseTerm();
-                for (;;) {
-                    if      (eat('+')) x += parseTerm(); // addition
-                    else if (eat('-')) x -= parseTerm(); // subtraction
-                    else return x;
-                }
-            }
-
-            double parseTerm() {
-                double x = parseFactor();
-                for (;;) {
-                    if      (eat('*')) x *= parseFactor(); // multiplication
-                    else if (eat('/')) x /= parseFactor(); // division
-                    else return x;
-                }
-            }
-
-            double parseFactor() {
-                if (eat('+')) return parseFactor(); // unary plus
-                if (eat('-')) return -parseFactor(); // unary minus
-
-                double x;
-                int startPos = this.pos;
-                if (eat('(')) { // parentheses
-                    x = parseExpression();
-                    eat(')');
-                } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
-                    while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
-                    x = Double.parseDouble(str.substring(startPos, this.pos));
-                } else if (ch >= 'a' && ch <= 'z') { // functions
-                    while (ch >= 'a' && ch <= 'z') nextChar();
-                    String func = str.substring(startPos, this.pos);
-                    x = parseFactor();
-                    if (func.equals("sqrt")) x = Math.sqrt(x);
-                    else if (func.equals("sin")) x = Math.sin(Math.toRadians(x));
-                    else if (func.equals("cos")) x = Math.cos(Math.toRadians(x));
-                    else if (func.equals("tan")) x = Math.tan(Math.toRadians(x));
-                    else if (func.equals("log")) x = Math.log10(x);
-                    else if (func.equals("ln")) x = Math.log(x);
-                    else throw new RuntimeException("Unknown function: " + func);
-                } else {
-                    throw new RuntimeException("Unexpected: " + (char)ch);
-                }
-
-                if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
-
-                return x;
-            }
-        }.parse();
+    public void tanhOnClick(View view) {
+        setOperations("tan(");
     }
 
+    public void coshOnClick(View view) {
+        setOperations("cosh(");
+    }
+
+    public void sinhOnClick(View view) {
+        setOperations("sinh(");
+    }
+
+    public void tanOnClick(View view) {
+        setOperations("tan(");
+    }
+
+    public void cosOnClick(View view) {
+        setOperations("cos(");
+    }
+
+    public void lnOnClick(View view) {
+        setOperations("ln(");
+    }
+
+    public void squareRootonClick(View view) {
+        setOperations("√");
+    }
+
+    public void tenPowOnClick(View view) {
+        setOperations("10^");
+    }
+
+    public void powOnClickE(View view) {
+        setOperations("e^");
+    }
+
+    public void piOnClick(View view) {
+        setOperations("π");
+    }
+
+    public void log10OnClick(View view) {
+        setOperations("log10(");
+    }
 }

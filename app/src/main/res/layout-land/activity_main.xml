@@ -84,16 +84,16 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/calButtonTextSize"
                 android:textAllCaps="false"
-                android:onClick="parentesisRightOnClick"
-                tools:ignore="OnClick" />
+                android:onClick="piOnClick"
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/red"
+                android:background="@null"
                 android:text="ac"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="@dimen/calButtonTextSize"
                 android:onClick="clearOnClick"
                 />
@@ -145,7 +145,7 @@
                 android:background="@null"
                 android:text="^"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="25sp"
                 android:onClick="powOnClick"/>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -156,9 +156,9 @@
                 android:textAllCaps="false"
                 android:text="e^"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:onClick="powOnClickE"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
@@ -167,9 +167,9 @@
                 android:background="@null"
                 android:text="10^"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:onClick="tenPowOnClick"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
@@ -227,9 +227,9 @@
                 android:background="@null"
                 android:text="√"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:onClick="squareRootonClick"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
@@ -238,22 +238,22 @@
                 android:background="@null"
                 android:text="ln"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:textAllCaps="false"
                 android:onClick="lnOnClick"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
-                android:text="log"
+                android:text="log10"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:textAllCaps="false"
-                android:onClick="logOnClick"
-                tools:ignore="OnClick" />
+                android:onClick="log10OnClick"
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
@@ -310,7 +310,7 @@
                 android:background="@null"
                 android:text="sin"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:textAllCaps="false"
                 android:onClick="sinOnClick" />
 
@@ -321,10 +321,10 @@
                 android:background="@null"
                 android:text="cos"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:textAllCaps="false"
                 android:onClick="cosOnClick"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
@@ -333,10 +333,10 @@
                 android:background="@null"
                 android:text="tan"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:textAllCaps="false"
                 android:onClick="tanOnClick"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
@@ -393,10 +393,10 @@
                 android:background="@null"
                 android:text="sinh"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:textAllCaps="false"
                 android:onClick="sinhOnClick"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
@@ -405,10 +405,10 @@
                 android:background="@null"
                 android:text="cosh"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:textAllCaps="false"
                 android:onClick="coshOnClick"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
@@ -417,10 +417,10 @@
                 android:background="@null"
                 android:text="tanh"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/calButtonTextSize"
+                android:textSize="20sp"
                 android:textAllCaps="false"
                 android:onClick="tanhOnClick"
-                tools:ignore="OnClick" />
+                 />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"

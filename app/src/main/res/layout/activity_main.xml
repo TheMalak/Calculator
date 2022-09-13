@@ -55,9 +55,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/red"
-                android:text="AC"
-                android:textColor="@color/white"
+                android:background="@null"
+                android:text="ac"
+                android:textColor="@color/red"
                 android:textSize="@dimen/calButtonTextSize"
                 android:onClick="clearOnClick"
                 />
